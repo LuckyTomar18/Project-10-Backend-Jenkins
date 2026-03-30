@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.rays","c":"ORSProject10Application","l":"corsConfig()"},{"p":"com.rays","c":"ORSProject10Application","l":"main(String[])","url":"main(java.lang.String[])"},{"p":"com.rays","c":"ORSProject10Application","l":"ORSProject10Application()","url":"%3Cinit%3E()"}]
