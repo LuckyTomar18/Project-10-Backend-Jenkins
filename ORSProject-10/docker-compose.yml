@@ -1,5 +1,5 @@
 version: '3.8'
- 
+
 services:
   mysql:
     image: mysql:8.0
@@ -15,7 +15,7 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       retries: 5
- 
+
   backend:
     build: .
     container_name: backend-container
@@ -24,8 +24,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-     environment:
+    environment:
       - DB_HOST=mysql
- 
+
 volumes:
   mysql_data:
