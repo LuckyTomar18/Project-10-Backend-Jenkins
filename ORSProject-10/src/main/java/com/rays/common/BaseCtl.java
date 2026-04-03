@@ -124,6 +124,7 @@ public class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends BaseServic
 		}
 
 		T dto = (T) form.getDto();
+		System.out.println("====Lucky====="+dto);
 
 		List<T> list = baseService.search(dto, Integer.parseInt(pageNo), pageSize, userContext);
 
