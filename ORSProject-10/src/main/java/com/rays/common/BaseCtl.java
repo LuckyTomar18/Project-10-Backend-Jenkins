@@ -22,6 +22,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rays.dto.UserDTO;
 
+/**
+ * Base Controller class for handling common CRUD operations.
+ * 
+ * @author Lucky Tomar
+ *
+ * @param <F> Form class extending BaseForm
+ * @param <T> DTO class extending BaseDTO
+ * @param <S> Service interface extending BaseServiceInt
+ */
 public class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends BaseServiceInt<T>> {
 
 	@Autowired
@@ -32,6 +41,12 @@ public class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends BaseServic
 
 	protected UserContext userContext = null;
 
+	/**
+	 * Sets user context from session.
+	 * If not found, default user is assigned.
+	 * 
+	 * @param session HttpSession object
+	 */
 	@ModelAttribute
 	public void setUserContext(HttpSession session) {
 		userContext = UserContextHolder.getContext();
@@ -42,6 +57,12 @@ public class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends BaseServic
 		}
 	}
 
+	/**
+	 * Validates the request and collects validation errors.
+	 * 
+	 * @param bindingResult Binding result object
+	 * @return ORSResponse containing validation status
+	 */
 	public ORSResponse validate(BindingResult bindingResult) {
 
 		ORSResponse res = new ORSResponse(true);
@@ -61,6 +82,13 @@ public class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends BaseServic
 		return res;
 	}
 
+	/**
+	 * Handles save and update operations.
+	 * 
+	 * @param form Form data
+	 * @param bindingResult Validation result
+	 * @return ORSResponse with operation result
+	 */
 	@PostMapping("/save")
 	public ORSResponse save(@RequestBody @Valid F form, BindingResult bindingResult) {
 
@@ -100,6 +128,12 @@ public class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends BaseServic
 		return res;
 	}
 
+	/**
+	 * Fetch record by ID.
+	 * 
+	 * @param id Record ID
+	 * @return ORSResponse with record data
+	 */
 	@GetMapping("get/{id}")
 	public ORSResponse get(@PathVariable long id) {
 		ORSResponse res = new ORSResponse(true);
@@ -113,6 +147,14 @@ public class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends BaseServic
 		return res;
 	}
 
+	/**
+	 * Deletes multiple records and returns updated list.
+	 * 
+	 * @param ids Array of record IDs
+	 * @param pageNo Page number
+	 * @param form Form data
+	 * @return ORSResponse with updated results
+	 */
 	@PostMapping("deleteMany/{ids}")
 	public ORSResponse deleteMany(@PathVariable String[] ids, @RequestParam("pageNo") String pageNo,
 			@RequestBody F form) {
@@ -142,6 +184,13 @@ public class BaseCtl<F extends BaseForm, T extends BaseDTO, S extends BaseServic
 		return res;
 	}
 
+	/**
+	 * Search records with pagination support.
+	 * 
+	 * @param form Form containing search criteria
+	 * @param pageNo Page number
+	 * @return ORSResponse with search results
+	 */
 	@RequestMapping(value = "/search/{pageNo}", method = { RequestMethod.GET, RequestMethod.POST })
 	public ORSResponse search(@RequestBody F form, @PathVariable int pageNo) {
 

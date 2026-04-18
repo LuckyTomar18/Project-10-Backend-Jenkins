@@ -17,6 +17,19 @@ import com.rays.dto.CourseDTO;
 import com.rays.dto.FacultyDTO;
 import com.rays.dto.SubjectDTO;
 
+/**
+ * FacultyDAOImpl is the DAO implementation class for Faculty entity.
+ * 
+ * It extends BaseDAOImpl to inherit common database operations
+ * such as save, update, delete, and search.
+ * 
+ * This class handles:
+ * - Dynamic query creation using JPA Criteria API
+ * - Population of related entity data (College, Course, Subject)
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @Repository
 public class FacultyDAOImpl extends BaseDAOImpl<FacultyDTO> implements FacultyDAOInt {
 
@@ -29,11 +42,27 @@ public class FacultyDAOImpl extends BaseDAOImpl<FacultyDTO> implements FacultyDA
 	@Autowired
 	SubjectDAOInt subjectDao;
 
+	/**
+	 * Returns the DTO class type.
+	 * 
+	 * @return FacultyDTO class
+	 */
 	@Override
 	public Class<FacultyDTO> getDTOClass() {
 		return FacultyDTO.class;
 	}
 
+	/**
+	 * Populates additional fields in FacultyDTO using related entities.
+	 * 
+	 * Fetches:
+	 * - College Name using collegeId
+	 * - Course Name using courseId
+	 * - Subject Name using subjectId
+	 * 
+	 * @param dto FacultyDTO object
+	 * @param userContext current user context
+	 */
 	@Override
 	protected void populate(FacultyDTO dto, UserContext userContext) {
 
@@ -51,6 +80,21 @@ public class FacultyDAOImpl extends BaseDAOImpl<FacultyDTO> implements FacultyDA
 		}
 	}
 
+	/**
+	 * Builds dynamic where clause for Faculty search.
+	 * 
+	 * Filters applied:
+	 * - First Name (starts with)
+	 * - Email (starts with)
+	 * - College Name (starts with)
+	 * - Course Name (starts with)
+	 * - Subject Name (starts with)
+	 * 
+	 * @param dto search criteria
+	 * @param builder CriteriaBuilder
+	 * @param qRoot Root entity reference
+	 * @return list of predicates
+	 */
 	@Override
 	protected List<Predicate> getWhereClause(FacultyDTO dto, CriteriaBuilder builder, Root<FacultyDTO> qRoot) {
 

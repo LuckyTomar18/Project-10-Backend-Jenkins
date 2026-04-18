@@ -8,6 +8,12 @@ import com.rays.common.BaseDTO;
 import com.rays.common.BaseForm;
 import com.rays.dto.CollegeDTO;
 
+/**
+ * Form for College entity.
+ * Handles input data and validation, and converts it to CollegeDTO.
+ * 
+ * @author Lucky Tomar
+ */
 public class CollegeForm extends BaseForm {
 
 	@NotEmpty(message = "Name is required")

@@ -23,7 +23,7 @@ import com.rays.dto.MarksheetDTO;
  * This class provides additional methods like finding marksheet by name, roll
  * number, and fetching merit list.
  * 
- * @author Rishabh Shrivastava
+ * @author Lucky Tomar
  */
 @Service
 @Transactional

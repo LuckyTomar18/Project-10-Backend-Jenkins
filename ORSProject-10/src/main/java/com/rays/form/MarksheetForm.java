@@ -9,6 +9,12 @@ import com.rays.common.BaseDTO;
 import com.rays.common.BaseForm;
 import com.rays.dto.MarksheetDTO;
 
+/**
+ * Form for Marksheet entity.
+ * Handles validation and converts data to MarksheetDTO.
+ * 
+ * @author Lucky Tomar
+ */
 public class MarksheetForm extends BaseForm {
 
 	@NotEmpty(message = "Roll No is required")

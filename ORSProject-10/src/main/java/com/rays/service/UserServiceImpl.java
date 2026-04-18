@@ -1,4 +1,3 @@
-
 package com.rays.service;
 
 import java.sql.Timestamp;
@@ -17,6 +16,13 @@ import com.rays.email.EmailBuilder;
 import com.rays.email.EmailMessage;
 import com.rays.email.EmailServiceInt;
 
+/**
+ * Service implementation for User.
+ * Handles user operations like registration, login, password management,
+ * and email notifications.
+ * 
+ * @author Lucky Tomar
+ */
 @Service
 @Transactional
 public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implements UserServiceInt {
@@ -24,11 +30,17 @@ public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implem
 	@Autowired
 	private EmailServiceInt emailservice;
 
+	/**
+	 * Finds user by login ID.
+	 */
 	@Transactional(readOnly = true)
 	public UserDTO findByLoginId(String login, UserContext userContext) {
 		return baseDao.findByUniqueKey("loginId", login, userContext);
 	}
 
+	/**
+	 * Registers a new user and sends confirmation email.
+	 */
 	@Override
 	public UserDTO register(UserDTO dto, UserContext userContext) {
 		baseDao.add(dto, userContext);
@@ -48,6 +60,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implem
 		return dto;
 	}
 
+	/**
+	 * Authenticates user login.
+	 */
 	@Override
 	public UserDTO authenticate(String loginId, String password) {
 		UserDTO dto = findByLoginId(loginId, null);
@@ -63,11 +78,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implem
 				dto.setUnsucessfullLoginAttempt(1 + dto.getUnsucessfullLoginAttempt());
 				update(dto, userContext);
 			}
-
 		}
 		return null;
 	}
 
+	/**
+	 * Sends password to user's email if forgotten.
+	 */
 	@Override
 	public boolean forgotPassword(String loginId) {
 
@@ -77,7 +94,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implem
 			return false;
 		}
 
-		// Data map banayenge
 		HashMap<String, String> map = new HashMap<>();
 
 		map.put("firstName", dto.getFirstName());
@@ -85,23 +101,22 @@ public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implem
 		map.put("login", dto.getLoginId());
 		map.put("password", dto.getPassword());
 
-		// HTML message generate
 		String message = EmailBuilder.getForgetPasswordMessage(map);
 
-		// Email object create
 		EmailMessage email = new EmailMessage();
-
 		email.setTo(dto.getLoginId());
 		email.setSubject("Your Password has been forgotten.....");
 		email.setMessage(message);
 		email.setMessageType(EmailMessage.HTML_MSG);
 
-		// Send mail
 		emailservice.sendMail(email);
 
 		return true;
 	}
 
+	/**
+	 * Changes user password and sends confirmation email.
+	 */
 	@Override
 	public UserDTO changePassword(String loginId, String oldPassword, String newPassword, UserContext userContext) {
 
@@ -109,14 +124,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implem
 
 		dto.setCreatedBy(userContext.getLoginId());
 
-		// Check user exist + old password match
 		if (dto != null && oldPassword.equals(dto.getPassword())) {
 
-			// Update password
 			dto.setPassword(newPassword);
 			update(dto, userContext);
 
-			// Prepare email data
 			HashMap<String, String> map = new HashMap<>();
 
 			map.put("firstName", dto.getFirstName());
@@ -124,17 +136,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implem
 			map.put("login", dto.getLoginId());
 			map.put("password", dto.getPassword());
 
-			// Generate HTML message
 			String message = EmailBuilder.getChangePasswordMessage(map);
 
-			// Create Email object
 			EmailMessage email = new EmailMessage();
 			email.setTo(dto.getLoginId());
 			email.setSubject("ORS Password Changed Successfully");
 			email.setMessage(message);
 			email.setMessageType(EmailMessage.HTML_MSG);
 
-			// Send mail
 			emailservice.sendMail(email);
 
 			return dto;
@@ -142,4 +151,5 @@ public class UserServiceImpl extends BaseServiceImpl<UserDTO, UserDAOInt> implem
 		} else {
 			return null;
 		}
-	}}
+	}
+}

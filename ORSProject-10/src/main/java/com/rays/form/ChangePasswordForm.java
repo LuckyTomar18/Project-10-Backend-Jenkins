@@ -5,6 +5,12 @@ import javax.validation.constraints.Size;
 
 import com.rays.common.BaseForm;
 
+/**
+ * Form for changing user password.
+ * Contains old and new password fields with validation.
+ * 
+ * @author Lucky Tomar
+ */
 public class ChangePasswordForm extends BaseForm {
 
 	@NotEmpty(message = "Old Password is required")

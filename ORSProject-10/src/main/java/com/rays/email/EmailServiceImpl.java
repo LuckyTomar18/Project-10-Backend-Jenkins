@@ -7,12 +7,29 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+/**
+ * EmailServiceImpl is the implementation of EmailServiceInt.
+ * 
+ * It is responsible for sending emails using Spring's JavaMailSender.
+ * Supports both HTML and plain text email formats.
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @Service
 public class EmailServiceImpl implements EmailServiceInt{
 
 	@Autowired
 	private JavaMailSender mailSender;
 
+	/**
+	 * Sends an email based on the provided EmailMessage object.
+	 * 
+	 * It creates a MimeMessage and sets recipient, subject,
+	 * and message content. Supports both HTML and TEXT formats.
+	 * 
+	 * @param msg EmailMessage containing email details
+	 */
 	@Override
 	public void sendMail(EmailMessage msg){
 		 try {

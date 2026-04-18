@@ -12,9 +12,21 @@ import org.springframework.stereotype.Service;
 
 import com.rays.dto.UserDTO;
 
+/**
+ * JWTUserDetailsService is used to load user details from database
+ * for authentication in Spring Security.
+ * 
+ * It implements UserDetailsService and overrides loadUserByUsername()
+ * to fetch user by loginId.
+ * 
+ * @author Lucky Tomar
+ */
 @Service
 public class JWTUserDetailsService implements UserDetailsService {
 
+	/**
+	 * Password encoder bean using BCrypt algorithm
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -23,6 +35,10 @@ public class JWTUserDetailsService implements UserDetailsService {
 	@Autowired
 	UserServiceInt userService;
 
+	/**
+	 * Loads user from database using username (loginId)
+	 * and converts it into Spring Security UserDetails
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

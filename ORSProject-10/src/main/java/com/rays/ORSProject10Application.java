@@ -51,6 +51,12 @@ public class ORSProject10Application {
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
+            
+			/*
+			 * @Override public void addInterceptors(InterceptorRegistry registry) {
+			 * registry.addInterceptor(frontCtl).addPathPatterns("/**").excludePathPatterns(
+			 * "/Auth/**"); } };
+			 */
         };
 
         return w;

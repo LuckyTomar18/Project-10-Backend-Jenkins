@@ -24,6 +24,21 @@ import com.rays.dto.UserDTO;
 import com.rays.service.JWTUserDetailsService;
 import com.rays.service.UserServiceInt;
 
+/**
+ * JWTRequestFilter is responsible for intercepting incoming HTTP requests
+ * and validating JWT tokens.
+ * 
+ * It extracts the token from the Authorization header, validates it,
+ * and sets authentication in Spring Security context.
+ * 
+ * It also loads user details from database and sets UserContext
+ * in ThreadLocal for use throughout the request lifecycle.
+ * 
+ * Additionally, it handles database connection failures and invalid tokens.
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
@@ -36,6 +51,17 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private UserServiceInt userService;
 
+	/**
+	 * This method is executed once per request.
+	 * It processes JWT token validation and authentication setup.
+	 * 
+	 * @param request HTTP request
+	 * @param response HTTP response
+	 * @param filterChain filter chain
+	 * 
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -75,12 +101,12 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
 				System.out.println("request filter: " + dto.getLoginId());
 
-				// ✅ FIX: Database se user fetch karo taaki userId mile
+				// Fetch full user from DB to get complete details (like userId)
 				UserContext tempContext = new UserContext(dto);
 				UserDTO fullUserDTO = userService.findByLoginId(loginId, tempContext);
 
 				if (fullUserDTO != null) {
-				    UserContext context = new UserContext(fullUserDTO); // id + loginId dono honge
+				    UserContext context = new UserContext(fullUserDTO);
 				    UserContextHolder.setContext(context);
 				} else {
 				    UserContext context = new UserContext(dto);
@@ -88,7 +114,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 				}
 
 			}catch(CannotCreateTransactionException | DataAccessResourceFailureException | JDBCConnectionException e) {
-				 // DB is down
+				 // Database is down
                 response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE); // 503
                 response.setContentType("application/json");
                 response.getWriter().write("{\"result\":{\"message\":\"Database server down!! Please try again later.\"},\"success\":false}");

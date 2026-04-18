@@ -23,6 +23,17 @@ import com.rays.form.UserForm;
 import com.rays.form.UserRegistrationForm;
 import com.rays.service.UserServiceInt;
 
+/**
+ * LoginCtl is a REST controller responsible for handling authentication
+ * and user-related operations such as login, signup, logout, and
+ * password recovery.
+ * 
+ * It integrates JWT-based authentication and extends BaseCtl
+ * for common functionalities.
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @RestController
 @RequestMapping(value = "Auth")
 public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
@@ -33,6 +44,16 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 	@Autowired
 	private UserServiceInt userService;
 
+	/**
+	 * Authenticates user credentials and generates JWT token on success.
+	 * 
+	 * @param form LoginForm containing loginId and password
+	 * @param bindingResult validation result
+	 * @param session HTTP session
+	 * @param request HTTP request
+	 * @return ORSResponse containing user details and JWT token
+	 * @throws Exception
+	 */
 	@PostMapping("login")
 	public ORSResponse login(@RequestBody @Valid LoginForm form, BindingResult bindingResult, HttpSession session,
 			HttpServletRequest request) throws Exception {
@@ -66,6 +87,13 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 		return res;
 	}
 
+	/**
+	 * Registers a new user after validating input and checking duplicate loginId.
+	 * 
+	 * @param form UserRegistrationForm containing user details
+	 * @param bindingResult validation result
+	 * @return ORSResponse with registration status
+	 */
 	@PostMapping("signUp")
 	public ORSResponse signUp(@RequestBody @Valid UserRegistrationForm form, BindingResult bindingResult) {
 
@@ -102,6 +130,13 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 		return res;
 	}
 
+	/**
+	 * Logs out the current user by invalidating the HTTP session.
+	 * 
+	 * @param session HTTP session
+	 * @return ORSResponse confirming logout
+	 * @throws Exception
+	 */
 	@GetMapping("logout")
 	public ORSResponse logout(HttpSession session) throws Exception {
 
@@ -114,23 +149,32 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 		return res;
 	}
 
+	/**
+	 * Handles forgot password functionality.
+	 * Sends password to registered email if loginId exists.
+	 * 
+	 * @param form ForgetPasswordForm containing loginId
+	 * @param bindingResult validation result
+	 * @return ORSResponse with operation status
+	 */
 	@PostMapping("forgetPassword")
-	public ORSResponse forgetPassword(@RequestBody @Valid ForgetPasswordForm form, BindingResult bindingResult) {ORSResponse res = validate(bindingResult);
+	public ORSResponse forgetPassword(@RequestBody @Valid ForgetPasswordForm form, BindingResult bindingResult) {
+		ORSResponse res = validate(bindingResult);
 
-	if (!res.isSuccess()) {
+		if (!res.isSuccess()) {
+			return res;
+		}
+
+		boolean flag = userService.forgotPassword(form.getLoginId());
+
+		if (flag == true) {
+			res.setSuccess(true);
+			res.addMessage("Password sent to your email");
+		} else {
+			res.setSuccess(false);
+			res.addMessage("Login Id not found");
+		}
+
 		return res;
 	}
-
-	boolean flag = userService.forgotPassword(form.getLoginId());
-
-	if (flag == true) {
-		res.setSuccess(true);
-		res.addMessage("Password sent to your email");
-	} else {
-		res.setSuccess(false);
-		res.addMessage("Login Id not found");
-	}
-
-	return res;
-}
 }

@@ -1,4 +1,3 @@
-
 package com.rays.form;
 
 import java.util.Date;
@@ -7,6 +6,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+/**
+ * Form for user profile.
+ * Handles validation of user personal details.
+ * 
+ * @author Lucky Tomar
+ */
 public class MyProfileForm {
 
 	@NotEmpty(message = "First Name is required")

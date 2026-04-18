@@ -15,17 +15,41 @@ import com.rays.common.UserContext;
 import com.rays.dto.CourseDTO;
 import com.rays.dto.SubjectDTO;
 
+/**
+ * SubjectDAOImpl is the DAO implementation class for Subject entity.
+ * 
+ * It extends BaseDAOImpl to inherit common CRUD operations
+ * such as save, update, delete, and search.
+ * 
+ * This class handles:
+ * - Dynamic query creation using JPA Criteria API
+ * - Population of related entity data (Course)
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @Repository
 public class SubjectDAOImpl extends BaseDAOImpl<SubjectDTO> implements SubjectDAOInt {
 
 	@Autowired
 	CourseDAOInt courseDao;
 
+	/**
+	 * Returns the DTO class type.
+	 * 
+	 * @return SubjectDTO class
+	 */
 	@Override
 	public Class<SubjectDTO> getDTOClass() {
 		return SubjectDTO.class;
 	}
 
+	/**
+	 * Populates course name using courseId.
+	 * 
+	 * @param dto SubjectDTO object
+	 * @param userContext current user context
+	 */
 	@Override
 	protected void populate(SubjectDTO dto, UserContext userContext) {
 		if (dto.getCourseId() != 0) {
@@ -36,6 +60,18 @@ public class SubjectDAOImpl extends BaseDAOImpl<SubjectDTO> implements SubjectDA
 		}
 	}
 
+	/**
+	 * Builds dynamic where clause for Subject search.
+	 * 
+	 * Filters applied:
+	 * - Name (starts with)
+	 * - Course Name (starts with)
+	 * 
+	 * @param dto search criteria
+	 * @param builder CriteriaBuilder
+	 * @param qRoot Root entity reference
+	 * @return list of predicates
+	 */
 	@Override
 	protected List<Predicate> getWhereClause(SubjectDTO dto, CriteriaBuilder builder, Root<SubjectDTO> qRoot) {
 

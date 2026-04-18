@@ -7,6 +7,12 @@ import com.rays.common.BaseServiceImpl;
 import com.rays.dao.CourseDAOInt;
 import com.rays.dto.CourseDTO;
 
+/**
+ * Service implementation for Course.
+ * Provides CRUD operations using BaseServiceImpl.
+ * 
+ * @author Lucky Tomar
+ */
 @Service
 @Transactional
 public class CourseServiceImpl extends BaseServiceImpl<CourseDTO, CourseDAOInt> implements CourseServiceInt {

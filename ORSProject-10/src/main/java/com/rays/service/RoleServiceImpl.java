@@ -8,10 +8,19 @@ import com.rays.common.UserContext;
 import com.rays.dao.RoleDAOInt;
 import com.rays.dto.RoleDTO;
 
+/**
+ * Service implementation for Role.
+ * Provides CRUD operations and role-specific methods.
+ * 
+ * @author Lucky Tomar
+ */
 @Service
 @Transactional
 public class RoleServiceImpl extends BaseServiceImpl<RoleDTO, RoleDAOInt> implements RoleServiceInt {
 
+	/**
+	 * Finds role by name.
+	 */
 	@Transactional(readOnly = true)
 	public RoleDTO findByName(String name, UserContext userContext) {
 		return baseDao.findByUniqueKey("name", name, userContext);

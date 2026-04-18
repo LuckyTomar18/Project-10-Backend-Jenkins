@@ -7,6 +7,12 @@ import com.rays.common.BaseDTO;
 import com.rays.common.BaseForm;
 import com.rays.dto.VenueDTO;
 
+/**
+ * Form for Venue entity.
+ * Handles validation and converts data to VenueDTO.
+ * 
+ * @author Lucky Tomar
+ */
 public class VenueForm extends BaseForm {
 
 	@NotEmpty(message="venue name is required")

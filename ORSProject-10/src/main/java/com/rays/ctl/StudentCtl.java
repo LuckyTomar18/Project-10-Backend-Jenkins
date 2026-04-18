@@ -15,6 +15,16 @@ import com.rays.form.StudentForm;
 import com.rays.service.CollegeServiceInt;
 import com.rays.service.StudentServiceInt;
 
+/**
+ * StudentCtl is a REST controller for handling Student-related operations.
+ * 
+ * It extends BaseCtl to inherit common CRUD functionalities.
+ * Additionally, it provides a preload API to fetch college data
+ * required for student form dropdowns.
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @RestController
 @RequestMapping(value = "Student")
 public class StudentCtl extends BaseCtl<StudentForm, StudentDTO, StudentServiceInt> {
@@ -22,6 +32,11 @@ public class StudentCtl extends BaseCtl<StudentForm, StudentDTO, StudentServiceI
 	@Autowired
 	private CollegeServiceInt collegeService;
 
+	/**
+	 * Preload API to fetch list of colleges for student form dropdown.
+	 * 
+	 * @return ORSResponse containing college list
+	 */
 	@GetMapping("preload")
 	public ORSResponse preload() {
 		ORSResponse res = new ORSResponse(true);

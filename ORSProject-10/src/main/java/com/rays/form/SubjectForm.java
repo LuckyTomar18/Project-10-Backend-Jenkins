@@ -8,6 +8,12 @@ import com.rays.common.BaseDTO;
 import com.rays.common.BaseForm;
 import com.rays.dto.SubjectDTO;
 
+/**
+ * Form for Subject entity.
+ * Handles validation and converts data to SubjectDTO.
+ * 
+ * @author Lucky Tomar
+ */
 public class SubjectForm extends BaseForm {
 
 	@NotNull(message = "Course is required")

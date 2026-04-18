@@ -15,17 +15,41 @@ import com.rays.common.UserContext;
 import com.rays.dto.CollegeDTO;
 import com.rays.dto.StudentDTO;
 
+/**
+ * StudentDAOImpl is the DAO implementation class for Student entity.
+ * 
+ * It extends BaseDAOImpl to inherit common CRUD operations
+ * such as save, update, delete, and search.
+ * 
+ * This class handles:
+ * - Dynamic query creation using JPA Criteria API
+ * - Population of related entity data (College)
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @Repository
 public class StudentDAOImpl extends BaseDAOImpl<StudentDTO> implements StudentDAOInt {
 
 	@Autowired
 	CollegeDAOInt collegeService = null;
 
+	/**
+	 * Returns the DTO class type.
+	 * 
+	 * @return StudentDTO class
+	 */
 	@Override
 	public Class<StudentDTO> getDTOClass() {
 		return StudentDTO.class;
 	}
 
+	/**
+	 * Populates college name using collegeId.
+	 * 
+	 * @param dto StudentDTO object
+	 * @param userContext current user context
+	 */
 	@Override
 	protected void populate(StudentDTO dto, UserContext userContext) {
 		CollegeDTO collegeDTO = collegeService.findByPK(dto.getCollegeId(), userContext);
@@ -34,6 +58,22 @@ public class StudentDAOImpl extends BaseDAOImpl<StudentDTO> implements StudentDA
 		}
 	}
 
+	/**
+	 * Builds dynamic where clause for Student search.
+	 * 
+	 * Filters applied:
+	 * - Enrollment Number (starts with)
+	 * - First Name (starts with)
+	 * - College Name (starts with)
+	 * - Email (starts with)
+	 * - Date of Birth (exact match)
+	 * - Phone Number (starts with)
+	 * 
+	 * @param dto search criteria
+	 * @param builder CriteriaBuilder
+	 * @param qRoot Root entity reference
+	 * @return list of predicates
+	 */
 	@Override
 	protected List<Predicate> getWhereClause(StudentDTO dto, CriteriaBuilder builder, Root<StudentDTO> qRoot) {
 

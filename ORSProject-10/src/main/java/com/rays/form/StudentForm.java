@@ -12,6 +12,12 @@ import com.rays.common.BaseDTO;
 import com.rays.common.BaseForm;
 import com.rays.dto.StudentDTO;
 
+/**
+ * Form for Student entity.
+ * Handles validation and converts data to StudentDTO.
+ * 
+ * @author Lucky Tomar
+ */
 public class StudentForm extends BaseForm {
 
 	@NotEmpty(message = "Enroll No is required")

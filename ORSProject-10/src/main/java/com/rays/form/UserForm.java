@@ -11,6 +11,12 @@ import com.rays.common.BaseDTO;
 import com.rays.common.BaseForm;
 import com.rays.dto.UserDTO;
 
+/**
+ * Form for User entity.
+ * Handles validation and converts data to UserDTO.
+ * 
+ * @author Lucky Tomar
+ */
 public class UserForm extends BaseForm {
 
 	@NotEmpty(message = "First Name is required")

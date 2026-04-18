@@ -12,14 +12,46 @@ import org.springframework.stereotype.Repository;
 import com.rays.common.BaseDAOImpl;
 import com.rays.dto.CollegeDTO;
 
+/**
+ * CollegeDAOImpl is the DAO implementation class for College entity.
+ * 
+ * It extends BaseDAOImpl to inherit common database operations
+ * such as save, update, delete, and search.
+ * 
+ * This class builds dynamic query conditions using JPA Criteria API
+ * based on provided search parameters.
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @Repository
 public class CollegeDAOImpl extends BaseDAOImpl<CollegeDTO> implements CollegeDAOInt {
 
+	/**
+	 * Returns the DTO class type.
+	 * 
+	 * @return CollegeDTO class
+	 */
 	@Override
 	public Class<CollegeDTO> getDTOClass() {
 		return CollegeDTO.class;
 	}
 
+	/**
+	 * Builds dynamic where clause for College search.
+	 * 
+	 * Filters applied:
+	 * - Name (starts with)
+	 * - City (starts with)
+	 * - State (starts with)
+	 * - Address (starts with)
+	 * - Phone Number (starts with)
+	 * 
+	 * @param dto search criteria
+	 * @param builder CriteriaBuilder
+	 * @param qRoot Root entity reference
+	 * @return list of predicates
+	 */
 	@Override
 	protected List<Predicate> getWhereClause(CollegeDTO dto, CriteriaBuilder builder, Root<CollegeDTO> qRoot) {
 

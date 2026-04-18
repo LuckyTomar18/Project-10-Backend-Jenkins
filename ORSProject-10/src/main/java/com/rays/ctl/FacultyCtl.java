@@ -20,6 +20,16 @@ import com.rays.service.CourseServiceInt;
 import com.rays.service.FacultyServiceInt;
 import com.rays.service.SubjectServiceInt;
 
+/**
+ * FacultyCtl is a REST controller for handling Faculty-related operations.
+ * 
+ * It extends BaseCtl to inherit common CRUD functionalities.
+ * Additionally, it provides a preload API to fetch dropdown data
+ * such as courses, subjects, and colleges required for UI forms.
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @RestController
 @RequestMapping(value = "Faculty")
 public class FacultyCtl extends BaseCtl<FacultyForm, FacultyDTO, FacultyServiceInt> {
@@ -33,6 +43,16 @@ public class FacultyCtl extends BaseCtl<FacultyForm, FacultyDTO, FacultyServiceI
 	@Autowired
 	private CollegeServiceInt collegeService;
 
+	/**
+	 * Preload API to fetch dropdown data for Faculty form.
+	 * 
+	 * It retrieves:
+	 * - Course list
+	 * - Subject list
+	 * - College list
+	 * 
+	 * @return ORSResponse containing dropdown data
+	 */
 	@GetMapping("/preload")
 	public ORSResponse preload() {
 		ORSResponse res = new ORSResponse(true);

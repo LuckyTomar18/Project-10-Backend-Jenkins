@@ -7,6 +7,12 @@ import com.rays.common.BaseServiceImpl;
 import com.rays.dao.TimeTableDAOInt;
 import com.rays.dto.TimeTableDTO;
 
+/**
+ * Service implementation for TimeTable.
+ * Provides CRUD operations for TimeTable entity.
+ * 
+ * @author Lucky Tomar
+ */
 @Service
 @Transactional
 public class TimeTableServiceImpl extends BaseServiceImpl<TimeTableDTO, TimeTableDAOInt>

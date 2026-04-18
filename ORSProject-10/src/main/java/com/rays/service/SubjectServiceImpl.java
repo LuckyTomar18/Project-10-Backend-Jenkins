@@ -7,6 +7,12 @@ import com.rays.common.BaseServiceImpl;
 import com.rays.dao.SubjectDAOInt;
 import com.rays.dto.SubjectDTO;
 
+/**
+ * Service implementation for Subject.
+ * Provides CRUD operations for Subject entity.
+ * 
+ * @author Lucky Tomar
+ */
 @Service
 @Transactional
 public class SubjectServiceImpl extends BaseServiceImpl<SubjectDTO, SubjectDAOInt> implements SubjectServiceInt {

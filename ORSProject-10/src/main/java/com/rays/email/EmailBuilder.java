@@ -2,7 +2,24 @@ package com.rays.email;
 
 import java.util.HashMap;
 
+/**
+ * EmailBuilder is a utility class used to generate HTML email content
+ * for various user-related actions such as registration, password recovery,
+ * and password change.
+ * 
+ * It constructs dynamic email messages using user details provided in a map.
+ * 
+ * @author Lucky Tomar
+ *
+ */
 public class EmailBuilder {
+
+	/**
+	 * Generates email message for user registration.
+	 * 
+	 * @param map contains user details like firstName, login, password
+	 * @return HTML email content
+	 */
 	public static String getUserRegistrationMessage(HashMap<String, String> map) {
 		StringBuilder msg = new StringBuilder();
 		msg.append("<HTML><BODY>");
@@ -16,8 +33,12 @@ public class EmailBuilder {
 		return msg.toString();
 	}
 
-	
-
+	/**
+	 * Generates email message for forgot password.
+	 * 
+	 * @param map contains user details like firstName, lastName, login, password
+	 * @return HTML email content
+	 */
 	public static String getForgetPasswordMessage(HashMap<String, String> map) {
 		StringBuilder msg = new StringBuilder();
 		msg.append("<HTML><BODY>");
@@ -30,8 +51,12 @@ public class EmailBuilder {
 		return msg.toString();
 	}
 
-	
-
+	/**
+	 * Generates email message for password change.
+	 * 
+	 * @param map contains user details like firstName, lastName, login, password
+	 * @return HTML email content
+	 */
 	public static String getChangePasswordMessage(HashMap<String, String> map) {
 		StringBuilder msg = new StringBuilder();
 		msg.append("<HTML><BODY>");

@@ -11,6 +11,12 @@ import com.rays.common.BaseDTO;
 import com.rays.common.BaseForm;
 import com.rays.dto.FacultyDTO;
 
+/**
+ * Form for Faculty entity.
+ * Handles input validation and converts data to FacultyDTO.
+ * 
+ * @author Lucky Tomar
+ */
 public class FacultyForm extends BaseForm {
 
 	@NotEmpty(message = "First Name is required")

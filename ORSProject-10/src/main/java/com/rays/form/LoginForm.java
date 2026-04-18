@@ -3,6 +3,12 @@ package com.rays.form;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * Form for user login.
+ * Validates login ID and password input.
+ * 
+ * @author Lucky Tomar
+ */
 public class LoginForm  {
 
 	@NotEmpty(message = "Login Id is required")

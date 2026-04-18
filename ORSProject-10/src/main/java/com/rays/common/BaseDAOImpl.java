@@ -1,5 +1,8 @@
 
-package com.rays.common;
+
+
+
+	package com.rays.common;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -14,19 +17,51 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+/**
+ * Base DAO Implementation providing common database operations.
+ * 
+ * @author Lucky Tomar
+ *
+ * @param <T> DTO class extending BaseDTO
+ */
 public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
 
-
+	/**
+	 * Returns DTO class type.
+	 * 
+	 * @return Class of DTO
+	 */
 	public abstract Class<T> getDTOClass();
 
+	/**
+	 * Builds dynamic where clause predicates.
+	 * 
+	 * @param dto DTO object
+	 * @param builder CriteriaBuilder instance
+	 * @param qRoot Root entity
+	 * @return List of predicates
+	 */
 	protected abstract List<Predicate> getWhereClause(T dto, CriteriaBuilder builder, Root<T> qRoot);
 
+	/**
+	 * Hook method for populating additional fields before persist/update.
+	 * 
+	 * @param dto DTO object
+	 * @param userContext User context
+	 */
 	protected void populate(T dto, UserContext userContext) {
 	}
 
+	/**
+	 * Adds a new record.
+	 * 
+	 * @param dto DTO object
+	 * @param userContext User context
+	 * @return Generated ID
+	 */
 	public long add(T dto, UserContext userContext) {
 
 		dto.setCreatedBy(userContext.getLoginId());
@@ -41,6 +76,12 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		return dto.getId();
 	}
 
+	/**
+	 * Updates an existing record.
+	 * 
+	 * @param dto DTO object
+	 * @param userContext User context
+	 */
 	public void update(T dto, UserContext userContext) {
 
 		dto.setModifiedBy(userContext.getLoginId());
@@ -51,15 +92,36 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		entityManager.merge(dto);
 	}
 
+	/**
+	 * Deletes a record.
+	 * 
+	 * @param dto DTO object
+	 * @param userContext User context
+	 */
 	public void delete(T dto, UserContext userContext) {
 		entityManager.remove(dto);
 	}
 
+	/**
+	 * Finds record by primary key.
+	 * 
+	 * @param pk Primary key
+	 * @param userContext User context
+	 * @return DTO object
+	 */
 	public T findByPK(long pk, UserContext userContext) {
 		T dto = entityManager.find(getDTOClass(), pk);
 		return dto;
 	}
 
+	/**
+	 * Finds record by unique key.
+	 * 
+	 * @param attribute Attribute name
+	 * @param val Attribute value
+	 * @param userContext User context
+	 * @return DTO object if found
+	 */
 	public T findByUniqueKey(String attribute, Object val, UserContext userContext) {
 
 		Class<T> dtoClass = getDTOClass();
@@ -87,6 +149,13 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		return dto;
 	}
 
+	/**
+	 * Creates criteria query with dynamic filters.
+	 * 
+	 * @param dto DTO object
+	 * @param userContext User context
+	 * @return TypedQuery object
+	 */
 	protected TypedQuery<T> createCriteria(T dto, UserContext userContext) {
 
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -106,6 +175,14 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		return query;
 	}
 	
+	
+	/**
+	 * Returns top 10 records based on HQL (used for merit list).
+	 * 
+	 * @param hql HQL query string
+	 * @param userContext User context
+	 * @return List of results
+	 */
 	public List marksheetMeritList(String hql, UserContext userContext) {
 		Query q = entityManager.createQuery(hql);
 		q.setFirstResult(0);
@@ -114,6 +191,15 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		return l;
 	}
 
+	/**
+	 * Searches records with pagination.
+	 * 
+	 * @param dto DTO object
+	 * @param pageNo Page number
+	 * @param pageSize Page size
+	 * @param userContext User context
+	 * @return List of results
+	 */
 	public List search(T dto, int pageNo, int pageSize, UserContext userContext) {
 
 		TypedQuery<T> query = createCriteria(dto, userContext);
@@ -127,26 +213,63 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		return list;
 	}
 
+	/**
+	 * Searches records without pagination.
+	 * 
+	 * @param dto DTO object
+	 * @param userContext User context
+	 * @return List of results
+	 */
 	public List search(T dto, UserContext userContext) {
 		return search(dto, 0, 0, userContext);
 	}
 
+	/**
+	 * Checks if string is null or empty.
+	 * 
+	 * @param val String value
+	 * @return true if empty
+	 */
 	protected boolean isEmptyString(String val) {
 		return val == null || val.trim().length() == 0;
 	}
 
+	/**
+	 * Checks if Double value is zero or null.
+	 * 
+	 * @param val Double value
+	 * @return true if zero
+	 */
 	protected boolean isZeroNumber(Double val) {
 		return val == null || val == 0;
 	}
 
+	/**
+	 * Checks if Long value is zero or null.
+	 * 
+	 * @param val Long value
+	 * @return true if zero
+	 */
 	protected boolean isZeroNumber(Long val) {
 		return val == null || val == 0;
 	}
 
+	/**
+	 * Checks if Integer value is zero or null.
+	 * 
+	 * @param val Integer value
+	 * @return true if zero
+	 */
 	protected boolean isZeroNumber(Integer val) {
 		return val == null || val == 0;
 	}
 
+	/**
+	 * Checks if object is not null.
+	 * 
+	 * @param val Object value
+	 * @return true if not null
+	 */
 	protected boolean isNotNull(Object val) {
 		return val != null;
 	}

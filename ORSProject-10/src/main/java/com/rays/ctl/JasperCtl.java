@@ -21,6 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.sf.jasperreports.engine.*;
 
+/**
+ * JasperCtl is a REST controller responsible for generating PDF reports
+ * using JasperReports.
+ * 
+ * It loads a JRXML template, compiles it, fills it with data from the database,
+ * and streams the generated PDF in the HTTP response.
+ * 
+ * This controller demonstrates integration of:
+ * - JasperReports
+ * - Hibernate (SessionFactory)
+ * - Direct JDBC Connection
+ * 
+ * @author Lucky Tomar
+ *
+ */
 @Transactional
 @RestController
 @RequestMapping("/jasper")
@@ -31,6 +46,23 @@ public class JasperCtl {
 
 	private SessionFactory sessionFactory;
 
+	/**
+	 * Generates a PDF report using JasperReports and sends it in HTTP response.
+	 * 
+	 * Steps:
+	 * 1. Load JRXML template from resources
+	 * 2. Compile JRXML into JasperReport
+	 * 3. Set report parameters
+	 * 4. Obtain DB connection using Hibernate
+	 * 5. Fill report with data
+	 * 6. Export report to PDF
+	 * 7. Write PDF to HTTP response
+	 * 
+	 * @param response HttpServletResponse to send PDF output
+	 * @throws JRException
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	@GetMapping(value = "/report", produces = MediaType.APPLICATION_PDF_VALUE)
 	public void generateReport(HttpServletResponse response) throws JRException, IOException, SQLException {
 

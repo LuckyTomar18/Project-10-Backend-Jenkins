@@ -7,6 +7,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+/**
+ * Form for User Registration.
+ * Handles validation for new user signup data.
+ * 
+ * @author Lucky Tomar
+ */
 public class UserRegistrationForm {
 
 	@NotEmpty(message = "First Name is required")
