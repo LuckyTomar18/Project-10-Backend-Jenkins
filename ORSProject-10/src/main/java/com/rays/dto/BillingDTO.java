@@ -61,17 +61,17 @@ public class BillingDTO extends BaseDTO {
 
 	@Override
 	public String getUniqueKey() {
-		return "userName";
+		return "billingCode";
 	}
 
 	@Override
 	public String getUniqueValue() {
-		return userName;
+		return billingCode;
 	}
 
 	@Override
 	public String getLabel() {
-		return "userName";
+		return "billingCode";
 	}
 
 	@Override

@@ -1,8 +1,5 @@
 
-
-
-
-	package com.rays.common;
+package com.rays.common;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -39,9 +36,9 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Builds dynamic where clause predicates.
 	 * 
-	 * @param dto DTO object
+	 * @param dto     DTO object
 	 * @param builder CriteriaBuilder instance
-	 * @param qRoot Root entity
+	 * @param qRoot   Root entity
 	 * @return List of predicates
 	 */
 	protected abstract List<Predicate> getWhereClause(T dto, CriteriaBuilder builder, Root<T> qRoot);
@@ -49,7 +46,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Hook method for populating additional fields before persist/update.
 	 * 
-	 * @param dto DTO object
+	 * @param dto         DTO object
 	 * @param userContext User context
 	 */
 	protected void populate(T dto, UserContext userContext) {
@@ -58,7 +55,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Adds a new record.
 	 * 
-	 * @param dto DTO object
+	 * @param dto         DTO object
 	 * @param userContext User context
 	 * @return Generated ID
 	 */
@@ -79,7 +76,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Updates an existing record.
 	 * 
-	 * @param dto DTO object
+	 * @param dto         DTO object
 	 * @param userContext User context
 	 */
 	public void update(T dto, UserContext userContext) {
@@ -95,7 +92,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Deletes a record.
 	 * 
-	 * @param dto DTO object
+	 * @param dto         DTO object
 	 * @param userContext User context
 	 */
 	public void delete(T dto, UserContext userContext) {
@@ -105,7 +102,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Finds record by primary key.
 	 * 
-	 * @param pk Primary key
+	 * @param pk          Primary key
 	 * @param userContext User context
 	 * @return DTO object
 	 */
@@ -117,8 +114,8 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Finds record by unique key.
 	 * 
-	 * @param attribute Attribute name
-	 * @param val Attribute value
+	 * @param attribute   Attribute name
+	 * @param val         Attribute value
 	 * @param userContext User context
 	 * @return DTO object if found
 	 */
@@ -127,7 +124,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 		Class<T> dtoClass = getDTOClass();
 
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		
+
 		CriteriaQuery<T> cq = builder.createQuery(dtoClass);
 
 		Root<T> qRoot = cq.from(dtoClass);
@@ -152,7 +149,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Creates criteria query with dynamic filters.
 	 * 
-	 * @param dto DTO object
+	 * @param dto         DTO object
 	 * @param userContext User context
 	 * @return TypedQuery object
 	 */
@@ -174,12 +171,11 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 
 		return query;
 	}
-	
-	
+
 	/**
 	 * Returns top 10 records based on HQL (used for merit list).
 	 * 
-	 * @param hql HQL query string
+	 * @param hql         HQL query string
 	 * @param userContext User context
 	 * @return List of results
 	 */
@@ -194,9 +190,9 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Searches records with pagination.
 	 * 
-	 * @param dto DTO object
-	 * @param pageNo Page number
-	 * @param pageSize Page size
+	 * @param dto         DTO object
+	 * @param pageNo      Page number
+	 * @param pageSize    Page size
 	 * @param userContext User context
 	 * @return List of results
 	 */
@@ -216,7 +212,7 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 	/**
 	 * Searches records without pagination.
 	 * 
-	 * @param dto DTO object
+	 * @param dto         DTO object
 	 * @param userContext User context
 	 * @return List of results
 	 */
