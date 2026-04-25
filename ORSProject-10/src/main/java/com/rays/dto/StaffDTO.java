@@ -21,13 +21,26 @@ public class StaffDTO extends BaseDTO {
 	@Column(name = "joining_date")
 	private Date joiningDate;
 	
-	@Column(name = "division")
-	private String division;
+	@Column(name = "Division_name", length = 50)
+	private String divisionName = null;
 	
 	@Column(name = "previous_employer")
 	private String previousEmployer;
 	
+	@Column(name = "division_id")
+	private Long divisionId;
 	
+	
+
+	
+
+	public String getEmployeeCode() {
+		return employeeCode;
+	}
+
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
+	}
 
 	public String getFullName() {
 		return fullName;
@@ -45,12 +58,12 @@ public class StaffDTO extends BaseDTO {
 		this.joiningDate = joiningDate;
 	}
 
-	public String getDivision() {
-		return division;
+	public String getDivisionName() {
+		return divisionName;
 	}
 
-	public void setDivision(String division) {
-		this.division = division;
+	public void setDivisionName(String divisionName) {
+		this.divisionName = divisionName;
 	}
 
 	public String getPreviousEmployer() {
@@ -60,13 +73,13 @@ public class StaffDTO extends BaseDTO {
 	public void setPreviousEmployer(String previousEmployer) {
 		this.previousEmployer = previousEmployer;
 	}
-	
-	public String getEmployeeCode() {
-		return employeeCode;
+
+	public Long getDivisionId() {
+		return divisionId;
 	}
 
-	public void setEmployeeCode(String employeeCode) {
-		this.employeeCode = employeeCode;
+	public void setDivisionId(Long divisionId) {
+		this.divisionId = divisionId;
 	}
 
 	@Override

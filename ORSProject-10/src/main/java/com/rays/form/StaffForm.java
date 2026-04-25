@@ -2,6 +2,7 @@ package com.rays.form;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -25,58 +26,85 @@ public class StaffForm extends BaseForm {
 	@PastOrPresent(message = "Joining Date cannot be in the future")
 	private Date joiningDate;
 
-	@NotEmpty(message = "Division Code is required")
-	private String division;
+	private String divisionName = null;
+	
+	
+	@NotNull(message = "Division is required")
+	@Min(1)
+	private Long divisionId;
+
 
 	@NotEmpty(message = "PreviousEmployer Code is required")
 	private String previousEmployer;
+
+	
+	public String getEmployeeCode() {
+		return employeeCode;
+	}
+
+
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
+	}
+
 
 	public String getFullName() {
 		return fullName;
 	}
 
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
 
 	public Date getJoiningDate() {
 		return joiningDate;
 	}
 
+
 	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 
-	public String getDivision() {
-		return division;
+
+	public String getDivisionName() {
+		return divisionName;
 	}
 
-	public void setDivision(String division) {
-		this.division = division;
+
+	public void setDivisionName(String divisionName) {
+		this.divisionName = divisionName;
 	}
+
+
+	public Long getDivisionId() {
+		return divisionId;
+	}
+
+
+	public void setDivisionId(Long divisionId) {
+		this.divisionId = divisionId;
+	}
+
 
 	public String getPreviousEmployer() {
 		return previousEmployer;
 	}
 
+
 	public void setPreviousEmployer(String previousEmployer) {
 		this.previousEmployer = previousEmployer;
 	}
 
-	public String getEmployeeCode() {
-		return employeeCode;
-	}
-
-	public void setEmployeeCode(String employeeCode) {
-		this.employeeCode = employeeCode;
-	}
 
 	@Override
 	public BaseDTO getDto() {
 		StaffDTO dto = initDTO(new StaffDTO());
 		dto.setFullName(fullName);
 		dto.setEmployeeCode(employeeCode);
-		dto.setDivision(division);
+		dto.setDivisionId(divisionId);
+		dto.setDivisionName(divisionName);
 		dto.setJoiningDate(joiningDate);
 		dto.setPreviousEmployer(previousEmployer);
 
