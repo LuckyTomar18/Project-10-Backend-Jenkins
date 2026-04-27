@@ -28,7 +28,6 @@ public class StaffCtl extends BaseCtl<StaffForm, StaffDTO, StaffServiceInt> {
 	public ORSResponse preload() {
 		ORSResponse res = new ORSResponse(true);
 		DivisionDTO dto = new DivisionDTO();
-		// dto.setStatus(RoleDTO.ACTIVE);
 		List<DropdownList> list = divisionService.search(dto, userContext);
 		res.addResult("divisionList", list);
 		return res;
