@@ -68,7 +68,11 @@ public abstract class BaseDAOImpl<T extends BaseDTO> implements BaseDAOInt<T> {
 
 		populate(dto, userContext);
 
+		System.out.println("===LUCKY++++");
+		
 		entityManager.persist(dto);
+		
+		System.out.println("===LUCKY++++");
 
 		return dto.getId();
 	}

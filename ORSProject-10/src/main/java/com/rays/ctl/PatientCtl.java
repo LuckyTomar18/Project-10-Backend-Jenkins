@@ -10,26 +10,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rays.common.BaseCtl;
 import com.rays.common.DropdownList;
 import com.rays.common.ORSResponse;
+import com.rays.dto.DiseaseDTO;
 import com.rays.dto.DivisionDTO;
-import com.rays.dto.StaffDTO;
-import com.rays.form.StaffForm;
+import com.rays.dto.PatientDTO;
+import com.rays.form.PatientForm;
+import com.rays.service.DiseaseServiceInt;
 import com.rays.service.DivisionServiceInt;
-import com.rays.service.StaffServiceInt;
+import com.rays.service.PatientServiceInt;
 
 @RestController
-@RequestMapping(value ="Staff")
-public class StaffCtl extends BaseCtl<StaffForm, StaffDTO, StaffServiceInt> {
+@RequestMapping(value="Patient")
+public class PatientCtl extends BaseCtl<PatientForm, PatientDTO, PatientServiceInt> {
 
 	@Autowired
-	DivisionServiceInt divisionService = null;
+	DiseaseServiceInt diseaseService = null;
 	
 	
 	@GetMapping("preload")
 	public ORSResponse preload() {
 		ORSResponse res = new ORSResponse(true);
-		DivisionDTO dto = new DivisionDTO();
-		List<DropdownList> list = divisionService.search(dto, userContext);
-		res.addResult("divisionList", list);
+		DiseaseDTO dto = new DiseaseDTO();
+		List<DropdownList> list = diseaseService.search(dto, userContext);
+		res.addResult("diseaseList", list);
 		return res;
 	}
 }

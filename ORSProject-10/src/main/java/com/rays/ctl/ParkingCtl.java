@@ -12,4 +12,5 @@ import com.rays.service.ParkingServiceInt;
 @RequestMapping(value="Parking")
 public class ParkingCtl extends BaseCtl<ParkingForm, ParkingDTO, ParkingServiceInt>{
 	
+	
 }
